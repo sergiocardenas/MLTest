@@ -7,7 +7,6 @@ import com.example.mercadolibretest.presentation.mapper.toState
 import com.example.mercadolibretest.presentation.state.MLHomeState
 import com.example.mercadolibretest.presentation.state.MLItemState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.processor.internal.definecomponent.codegen._dagger_hilt_android_components_ActivityComponent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,15 +23,20 @@ class HomeViewModel  @Inject constructor(
     val homeState: StateFlow<MLHomeState> = _homeState
     val query = MutableStateFlow<String>("")
 
-    fun searchItem(item: String){
+    fun searchItem(item: String, onSearchSuccess: (Boolean) -> Unit){
         if(item.isNotEmpty()){
             viewModelScope.launch {
                 useCase.getSearchResult(item).collect{ searchResult ->
                     if(searchResult.isNotEmpty()){
+                        onSearchSuccess(true)
                         _homeState.value = MLHomeState(true, item)
                         _list.value = searchResult.map { it.toState() }.toMutableList()
                     }else{
                         _list.value = mutableListOf()
+                        onSearchSuccess(false)
+                        _homeState.apply {
+                            value = value.copy(query = item)
+                        }
                     }
                 }
             }
