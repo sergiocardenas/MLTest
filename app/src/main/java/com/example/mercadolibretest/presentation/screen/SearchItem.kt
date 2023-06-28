@@ -1,5 +1,6 @@
 package com.example.mercadolibretest.presentation.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +32,9 @@ import com.example.mercadolibretest.presentation.state.MLItemState
 
 
 @Composable
-fun ProductImage(url: String) {
+fun ProductImage(
+    url: String
+) {
 
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
@@ -46,13 +49,19 @@ fun ProductImage(url: String) {
 }
 
 @Composable
-fun SearchItem (item: MLItemState) {
+fun SearchItem (
+    item: MLItemState,
+    onItemClick: (MLItemState) -> Unit
+) {
     Card(
         elevation = 2.dp,
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .height(120.dp),
+            .height(120.dp)
+            .clickable  {
+                  onItemClick(item)
+            },
         shape = RoundedCornerShape(corner = CornerSize(16.dp))
     ) {
         Box(

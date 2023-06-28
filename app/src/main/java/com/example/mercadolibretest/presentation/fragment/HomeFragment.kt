@@ -12,17 +12,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mercadolibretest.R
 import com.example.mercadolibretest.presentation.screen.HomeSearchScreen
+import com.example.mercadolibretest.presentation.state.MLItemState
 import com.example.mercadolibretest.presentation.viewmodel.HomeViewModel
+import com.example.mercadolibretest.presentation.viewmodel.NavViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment()  {
 
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var sharedViewModel: NavViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        sharedViewModel = ViewModelProvider(requireActivity())[NavViewModel::class.java]
     }
 
     @SuppressLint("MissingInflatedId")
@@ -34,19 +38,15 @@ class HomeFragment : Fragment()  {
 
         val composeView = ComposeView(requireContext())
         composeView.setContent {
-            HomeSearchScreen(homeViewModel)
+            HomeSearchScreen(homeViewModel){ item ->
+                goToDetail(item)
+            }
         }
-
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val nextButton = root.findViewById<Button>(R.id.button_home)
-        nextButton.setOnClickListener {
-            goToDetail()
-        }
-
         return composeView
     }
 
-    private fun goToDetail(){
+    fun goToDetail(item: MLItemState){
+        sharedViewModel.passItem(item)
         findNavController().navigate(
             resId = R.id.action_HomeFragment_to_DetailFragment
         )

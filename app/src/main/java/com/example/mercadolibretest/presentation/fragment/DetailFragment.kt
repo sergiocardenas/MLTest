@@ -7,13 +7,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.compose.ui.platform.ComposeView
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mercadolibretest.R
+import com.example.mercadolibretest.presentation.screen.DetailMLItemScreen
+import com.example.mercadolibretest.presentation.viewmodel.DetailViewModel
+import com.example.mercadolibretest.presentation.viewmodel.HomeViewModel
+import com.example.mercadolibretest.presentation.viewmodel.NavViewModel
 
 class DetailFragment : Fragment() {
 
+    private lateinit var detailViewModel: DetailViewModel
+    private lateinit var sharedViewModel: NavViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        detailViewModel = ViewModelProvider(this)[DetailViewModel::class.java]
+        sharedViewModel = ViewModelProvider(requireActivity())[NavViewModel::class.java]
+
+        sharedViewModel.item.value?.let {
+            detailViewModel.setItem(it)
+        }
+
+
     }
 
     @SuppressLint("MissingInflatedId")
@@ -21,18 +38,16 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val root = inflater.inflate(R.layout.fragment_detail, container, false)
-        val nextButton = root.findViewById<Button>(R.id.button_home)
-        nextButton.setOnClickListener {
-            goToHome()
+
+        val composeView = ComposeView(requireContext())
+        composeView.setContent {
+            DetailMLItemScreen(viewModel = detailViewModel)
         }
-        return root
+
+        return composeView
     }
 
     private fun goToHome(){
-        findNavController().navigate(
-            resId = R.id.action_DetailFragment_to_HomeFragment
-        )
+        findNavController().navigateUp()
     }
 }

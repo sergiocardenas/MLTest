@@ -22,3 +22,25 @@ data class MLItemState(
     val tags: List<String>,
 ) {
 }
+
+fun MLItemState.getEmpty() = MLItemState(
+    id = "",
+    title = "",
+    condition = "",
+    thumbnail = "",
+    catalog_product_id = "",
+    listing_type_id = "",
+    permalink = "",
+    buying_mode = "",
+    site_id = "",
+    category_id = "",
+    domain_id = "",
+    currency_id = "",
+    price = -1f,
+    original_price = -1f,
+    sale_price = -1f,
+    sold_quantity = 0,
+    available_quantity = 0,
+    accepts_mercadopago = false,
+    tags = listOf(),
+)

@@ -40,11 +40,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mercadolibretest.R
+import com.example.mercadolibretest.presentation.state.MLItemState
 import com.example.mercadolibretest.presentation.viewmodel.HomeViewModel
 
 @Composable
 fun HomeSearchScreen(
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    onItemClick: (MLItemState) -> Unit
 ) {
     val homeState = viewModel.homeState.collectAsState()
     val searchQuery = remember { mutableStateOf(homeState.value.query) }
@@ -160,7 +162,10 @@ fun HomeSearchScreen(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 items(viewModel.list.value) { item ->
-                    SearchItem(item = item)
+                    SearchItem(
+                        item = item,
+                        onItemClick = onItemClick
+                    )
                 }
             }
 
