@@ -64,7 +64,7 @@ dependencies {
     implementation "androidx.compose.foundation:foundation:$compose_ui_version"
     implementation "androidx.compose.material:material:$compose_ui_version"
     implementation "androidx.activity:activity-compose:$activity_compose_version"
-    implementation "io.coil-kt:coil-compose:2.3.0"
+    implementation "io.coil-kt:coil-compose:2.4.0"
 
     //Dagger Hilt
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
@@ -77,8 +77,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
 
     //Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1"
 
     //Mockito
     testImplementation 'org.mockito:mockito-core:5.4.0'

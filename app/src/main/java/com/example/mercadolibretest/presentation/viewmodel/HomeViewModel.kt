@@ -17,8 +17,8 @@ class HomeViewModel  @Inject constructor(
     private val useCase: MLSearchUsecase
 ) : ViewModel()   {
 
-    private val _list = MutableStateFlow<MutableList<MLItemState>>(mutableListOf())
-    val list: StateFlow<MutableList<MLItemState>> = _list
+    private val _list = MutableStateFlow<List<MLItemState>>(mutableListOf())
+    val list: StateFlow<List<MLItemState>> = _list
     private val _homeState = MutableStateFlow(MLHomeState())
     val homeState: StateFlow<MLHomeState> = _homeState
     val query = MutableStateFlow<String>("")
@@ -30,7 +30,7 @@ class HomeViewModel  @Inject constructor(
                     if(searchResult.isNotEmpty()){
                         onSearchSuccess(true)
                         _homeState.value = MLHomeState(true, item)
-                        _list.value = searchResult.map { it.toState() }.toMutableList()
+                        _list.value = searchResult.map { it.toState() }.subList(0,15)
                     }else{
                         _list.value = mutableListOf()
                         onSearchSuccess(false)

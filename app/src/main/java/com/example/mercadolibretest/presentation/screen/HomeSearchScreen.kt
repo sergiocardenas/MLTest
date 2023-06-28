@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -32,6 +34,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -48,6 +51,7 @@ fun HomeSearchScreen(
     val currentlySearch = remember { mutableStateOf(false) }
     val configuration = LocalConfiguration.current
     val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+    val focusManager = LocalFocusManager.current
 
     val onResult: (success: Boolean) -> Unit = {
         currentlySearch.value = false
@@ -76,7 +80,7 @@ fun HomeSearchScreen(
                 },
                 modifier = Modifier
                     .weight(
-                        if(homeState.value.hasSearched)
+                        if (homeState.value.hasSearched)
                             if (isPortrait) 7.4f else 8.5f
                         else
                             if (isPortrait) 8.75f else 9.3f
@@ -100,6 +104,7 @@ fun HomeSearchScreen(
                 if(homeState.value.hasSearched){
                     IconButton(
                         onClick = {
+                            focusManager.clearFocus()
                             viewModel.resetHomeState()
                             searchQuery.value = ""
                         },
@@ -122,6 +127,7 @@ fun HomeSearchScreen(
 
                 IconButton(
                     onClick = {
+                        focusManager.clearFocus()
                         currentlySearch.value = true
                         viewModel.searchItem(
                             item = searchQuery.value,
@@ -150,13 +156,14 @@ fun HomeSearchScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         if(homeState.value.hasSearched){
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
             ) {
-
+                items(viewModel.list.value) { item ->
+                    SearchItem(item = item)
+                }
             }
+
         }else{
             Column(
                 modifier = Modifier.fillMaxSize(),
