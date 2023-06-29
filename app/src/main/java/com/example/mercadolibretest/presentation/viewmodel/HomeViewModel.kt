@@ -30,7 +30,7 @@ class HomeViewModel  @Inject constructor(
                     if(searchResult.isNotEmpty()){
                         onSearchSuccess(true)
                         _homeState.value = MLHomeState(true, item)
-                        _list.value = searchResult.map { it.toState() }.subList(0,15)
+                        _list.value = searchResult.map { it.toState() }
                     }else{
                         _list.value = mutableListOf()
                         onSearchSuccess(false)

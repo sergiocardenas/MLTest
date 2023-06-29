@@ -81,8 +81,8 @@ internal class MLSearchRepositoryImpTest {
 
         searchResult.collect{
             Assert.assertEquals(listResult.size, it.size)
-            Assert.assertEquals(listResult[0].sale_price, -1)
-            Assert.assertEquals(listResult[0].original_price, -1)
+            Assert.assertEquals(listResult[0].sale_price, -1f)
+            Assert.assertEquals(listResult[0].original_price, -1f)
             Assert.assertEquals(listResult[0].tags.size, 0)
         }
 

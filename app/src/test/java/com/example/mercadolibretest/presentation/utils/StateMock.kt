@@ -1,12 +1,9 @@
-package com.example.mercadolibretest.data.utils
+package com.example.mercadolibretest.presentation.utils
 
-import com.example.mercadolibretest.data.response.MLItemResponse
-import com.example.mercadolibretest.data.response.MLSearchResponse
+import com.example.mercadolibretest.domain.model.MLItemModel
+import com.example.mercadolibretest.presentation.state.MLItemState
 
-fun getMLItemResponseMock(
-    hasSalePrice: Boolean,
-    hasTags: Boolean,
-) = MLItemResponse(
+fun getMLItemStateMock() = MLItemState(
     id = "MLA1149572373",
     title = " Moto G5 Plus 32 Gb  Gris Lunar 2 Gb Ram",
     condition = "new",
@@ -20,25 +17,16 @@ fun getMLItemResponseMock(
     domain_id = "MLA-CELLPHONES",
     currency_id = "ARS",
     price = 108000f,
-    original_price = if(hasSalePrice) 180000f else null,
-    sale_price = if(hasSalePrice) 180000f else null,
+    original_price = 180000f,
+    sale_price = 180000f,
     sold_quantity = 2,
     available_quantity = 1,
     accepts_mercadopago = true,
-    tags = if(hasTags)
-        listOf(
+    tags = listOf(
         "extended_warranty_eligible",
         "good_quality_picture",
         "good_quality_thumbnail",
         "ahora-paid-by-buyer",
         "immediate_payment",
         "shipping_guaranteed")
-    else null
-)
-
-fun getMLSearchResponseMock(mlItemList: List<MLItemResponse>) = MLSearchResponse(
-    site_id = "MLA",
-    country_default_time_zone = "GMT-03:00",
-    query = "Motorola G6",
-    results = mlItemList
 )
