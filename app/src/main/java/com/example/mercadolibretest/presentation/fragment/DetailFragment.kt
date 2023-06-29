@@ -6,14 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.mercadolibretest.R
 import com.example.mercadolibretest.presentation.screen.DetailMLItemScreen
 import com.example.mercadolibretest.presentation.viewmodel.DetailViewModel
-import com.example.mercadolibretest.presentation.viewmodel.HomeViewModel
 import com.example.mercadolibretest.presentation.viewmodel.NavViewModel
 
 class DetailFragment : Fragment() {
